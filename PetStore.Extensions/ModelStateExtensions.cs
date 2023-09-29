@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace RepoTemplate.Extensions;
+namespace PetStore.Extensions;
 
 public static class ModelStateExtensions
 {

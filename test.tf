@@ -1,7 +1,7 @@
 # Application Insights
 
 resource "azurerm_application_insights" "app-insights-test" {
-  name                = "<REPO_NAME>-test"
+  name                = "pet-store-test"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   application_type    = "web"
@@ -9,7 +9,7 @@ resource "azurerm_application_insights" "app-insights-test" {
   tags = {
     source              = "terraform"
     environment         = "test"
-    github_project_name = "<REPO_NAME>"
+    github_project_name = "pet-store"
     github_file_name    = "test.tf"
   }
   

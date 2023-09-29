@@ -22,6 +22,6 @@ jobs:
         propenstate: 'Ready'
         inprogressstate: 'In Progress' 
         ghrepo_owner: 'SwapLangauge'
-        ghrepo: '<REPO_NAME>'
+        ghrepo: 'pet-store'
         pull_number: ${{github.event.number}} 
         branch_name: ${{ github.ref }}

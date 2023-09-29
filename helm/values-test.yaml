@@ -5,21 +5,21 @@ apphost: k8s
 deploymenttype: Recreate
 
 label:
-    name: <REPO_NAME>
+    name: pet-store
     
 app:
-    name: <REPO_NAME>
+    name: pet-store
     
 container:
-    name: <REPO_NAME>
+    name: pet-store
     pullPolicy: Always
-    image: swlmicroservicesacr.azurecr.io/<REPO_NAME>-test
+    image: swlmicroservicesacr.azurecr.io/pet-store-test
     tag: latest
     port: 5000
 replicas: 1
 
 service:
-    port: <NEW_PORT>
+    port: 8080
     type: ClusterIP
 
 ingress:

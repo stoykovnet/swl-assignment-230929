@@ -1,6 +1,9 @@
-using RepoTemplate.Mappers;
+using PetStore.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//TODO: Add localhost database connection
+
 var app = builder.Build();
 
 builder.Services.AddAutoMapper(typeof(BaseProfile));

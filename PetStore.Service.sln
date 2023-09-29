@@ -1,20 +1,20 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Models", "RepoTemplate.Models\RepoTemplate.Models.csproj", "{27ED4A70-0FB0-4243-95C3-158CC893349A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Models", "PetStore.Models\PetStore.Models.csproj", "{27ED4A70-0FB0-4243-95C3-158CC893349A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.API", "RepoTemplate.API\RepoTemplate.API.csproj", "{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.API", "PetStore.API\PetStore.API.csproj", "{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.API.Swagger", "RepoTemplate.API.Swagger\RepoTemplate.API.Swagger.csproj", "{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.API.Swagger", "PetStore.API.Swagger\PetStore.API.Swagger.csproj", "{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Extensions", "RepoTemplate.Extensions\RepoTemplate.Extensions.csproj", "{FD90C333-EF4D-44AA-8E37-08792734CCF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Extensions", "PetStore.Extensions\PetStore.Extensions.csproj", "{FD90C333-EF4D-44AA-8E37-08792734CCF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Mappers", "RepoTemplate.Mappers\RepoTemplate.Mappers.csproj", "{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Mappers", "PetStore.Mappers\PetStore.Mappers.csproj", "{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Services", "RepoTemplate.Services\RepoTemplate.Services.csproj", "{5854D321-AEFC-4953-9F9B-3BF999FF8B12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Services", "PetStore.Services\PetStore.Services.csproj", "{5854D321-AEFC-4953-9F9B-3BF999FF8B12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Tests", "RepoTemplate.Tests\RepoTemplate.Tests.csproj", "{AB916D51-420C-42AF-AC40-D6FDA851335B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Tests", "PetStore.Tests\PetStore.Tests.csproj", "{AB916D51-420C-42AF-AC40-D6FDA851335B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Tests.Integration", "RepoTemplate.Tests.Integration\RepoTemplate.Tests.Integration.csproj", "{05C46A3D-C523-46DB-8975-642A76153798}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Tests.Integration", "PetStore.Tests.Integration\PetStore.Tests.Integration.csproj", "{05C46A3D-C523-46DB-8975-642A76153798}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{6FBB346D-05F5-42DE-81E8-E771981B9C8D}"
 EndProject
@@ -44,9 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helm", "Helm", "{2F2EA88A-2
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{E6F0C648-EC53-4EBB-B751-75CD1AB78D03}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml = azure-pipelines.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{4B328F63-0C29-41CF-8D38-FC74ED773299}"
 	ProjectSection(SolutionItems) = preProject
@@ -54,6 +51,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{
 		production.tf = production.tf
 		test.tf = test.tf
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.DataAccessLayer", "PetStore.DataAccessLayer\PetStore.DataAccessLayer.csproj", "{5694E68E-21E1-4CCF-B70D-8E067D85A82E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.DataAccessLayer.Models", "PetStore.DataAccessLayer.Models\PetStore.DataAccessLayer.Models.csproj", "{D204A01D-0964-44B9-BFBA-273C70DE1A44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.DataAccessLayer.Repositories", "PetStore.DataAccessLayer.Repositories\PetStore.DataAccessLayer.Repositories.csproj", "{941EC838-761D-4809-BC91-467CD93C8A77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,5 +96,19 @@ Global
 		{05C46A3D-C523-46DB-8975-642A76153798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05C46A3D-C523-46DB-8975-642A76153798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05C46A3D-C523-46DB-8975-642A76153798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5694E68E-21E1-4CCF-B70D-8E067D85A82E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5694E68E-21E1-4CCF-B70D-8E067D85A82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5694E68E-21E1-4CCF-B70D-8E067D85A82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5694E68E-21E1-4CCF-B70D-8E067D85A82E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D204A01D-0964-44B9-BFBA-273C70DE1A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D204A01D-0964-44B9-BFBA-273C70DE1A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D204A01D-0964-44B9-BFBA-273C70DE1A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D204A01D-0964-44B9-BFBA-273C70DE1A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941EC838-761D-4809-BC91-467CD93C8A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941EC838-761D-4809-BC91-467CD93C8A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941EC838-761D-4809-BC91-467CD93C8A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941EC838-761D-4809-BC91-467CD93C8A77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

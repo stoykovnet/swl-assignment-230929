@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace RepoTemplate.Mappers;
+namespace PetStore.Mappers;
 
 public class BaseProfile : Profile
 {

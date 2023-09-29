@@ -8,34 +8,34 @@
     }
   },
   "profiles": {
-    "RepoTemplate.API TEST": {
+    "PetStore.API TEST": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
-      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "launchUrl": "http://localhost:8080/swagger",
+      "applicationUrl": "http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "hotReloadEnabled": true,
       "hotReloadProfile": "aspnetcore"
     },
-    "RepoTemplate.API PROD": {
+    "PetStore.API PROD": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
-      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "launchUrl": "http://localhost:8080/swagger",
+      "applicationUrl": "http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
-    "RepoTemplate.API LOCAL": {
+    "PetStore.API LOCAL": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
-      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "launchUrl": "http://localhost:8080/swagger",
+      "applicationUrl": "http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Local"
       },

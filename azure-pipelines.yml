@@ -45,7 +45,7 @@ stages:
           backendAzureRmResourceGroupName: 'Terraform'
           backendAzureRmStorageAccountName: 'swlterraformsa'
           backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: '<REPO_NAME>.tfstate'
+          backendAzureRmKey: 'pet-store.tfstate'
           
       - task: TerraformCLI@0
         displayName: 'Terraform validate'
@@ -188,7 +188,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           dockerFile: Dockerfile-TEST
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-test:$(Build.BuildNumber)'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store-test:$(Build.BuildNumber)'
           useDefaultContext: false
       - task: Docker@1
         displayName: 'Push TEST image'
@@ -196,7 +196,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           command: 'Push an image'
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-test:$(Build.BuildNumber)'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store-test:$(Build.BuildNumber)'
 
   - stage: UpdateProdDocker
     displayName: Update prod docker image
@@ -215,7 +215,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           dockerFile: Dockerfile
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>:$(Build.BuildNumber)'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store:$(Build.BuildNumber)'
           useDefaultContext: false
       - task: Docker@1
         displayName: 'Push PROD image'
@@ -223,7 +223,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           command: 'Push an image'
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>:$(Build.BuildNumber)'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store:$(Build.BuildNumber)'
 
   - stage: UpdateDockerDocker
     displayName: Update DOCKER docker image
@@ -242,7 +242,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           dockerFile: Dockerfile-DOCKER
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-docker:latest'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store-docker:latest'
           useDefaultContext: false
       - task: Docker@1
         displayName: 'Push LATEST DOCKER image'
@@ -250,7 +250,7 @@ stages:
           azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
           azureContainerRegistry: swlmicroservicesacr.azurecr.io
           command: 'Push an image'
-          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-docker:latest'
+          imageName: 'swlmicroservicesacr.azurecr.io/pet-store-docker:latest'
 
 
   - stage: DeployTest
@@ -285,7 +285,7 @@ stages:
                   command: 'upgrade'
                   chartType: 'Name'
                   chartName: './helm/'
-                  releaseName: '<REPO_NAME>-release'
+                  releaseName: 'pet-store-release'
                   overrideValues: 'container.tag=$(Build.BuildNumber)'
                   valueFile: 'helm/values-test.yaml'    
 
@@ -321,6 +321,6 @@ stages:
                   command: 'upgrade'
                   chartType: 'Name'
                   chartName: './helm/'
-                  releaseName: '<REPO_NAME>-release'
+                  releaseName: 'pet-store-release'
                   overrideValues: 'container.tag=$(Build.BuildNumber)'
                   valueFile: 'helm/values.yaml'

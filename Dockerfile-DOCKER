@@ -7,5 +7,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runenv
 ENV ASPNETCORE_ENVIRONMENT Docker
 WORKDIR /
 COPY --from=build /publish .
-ENTRYPOINT ["dotnet", "RepoTemplate.API.dll", "--urls", "http://*:5000"]
+ENTRYPOINT ["dotnet", "PetStore.API.dll", "--urls", "http://*:5000"]
 EXPOSE 5000

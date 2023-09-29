@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "Terraform"
     storage_account_name = "swlterraformsa"
     container_name       = "tfstate"
-    key                  = "<REPO_NAME>.tfstate"
+    key                  = "pet-store.tfstate"
   }
 
   required_providers {
@@ -22,13 +22,13 @@ provider "azurerm" {
 # Resource group
 
 resource "azurerm_resource_group" "rg" {
-  name     = "<REPO_NAME>"
+  name     = "pet-store"
   location = "West Europe"
 
   tags = {
     source              = "terraform"
     environment         = "production,test"
-    github_project_name = "<REPO_NAME>"
+    github_project_name = "pet-store"
     github_file_name    = "main.tf"
   }
   
