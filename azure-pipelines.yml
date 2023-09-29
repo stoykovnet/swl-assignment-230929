@@ -1,0 +1,326 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - dev
+      
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily test midnight build
+    branches:
+      include:
+      - dev
+    always: false
+  - cron: "0 1 * * *"
+    displayName: Daily prod midnight build
+    branches:
+      include:
+      - master
+    always: false
+
+pr: none
+
+stages:
+  - stage: Terraform
+    displayName: Apply terraform
+    jobs:
+    - job: Terraform
+      displayName: Apply terraform
+      pool:
+        name: Azure Pipelines
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: TerraformInstaller@0
+        displayName: 'Use Terraform latest'
+        inputs:
+          terraformVersion: '1.0.5'
+      
+      - task: TerraformCLI@0
+        displayName: 'Terraform init'
+        inputs:
+          command: 'init'
+          backendType: 'azurerm'
+          backendServiceArm: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          backendAzureRmResourceGroupName: 'Terraform'
+          backendAzureRmStorageAccountName: 'swlterraformsa'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: '<REPO_NAME>.tfstate'
+          
+      - task: TerraformCLI@0
+        displayName: 'Terraform validate'
+        inputs:
+          command: 'validate'
+    
+      - task: TerraformCLI@0
+        displayName: 'Terraform plan'
+        inputs:
+          command: 'plan'
+          environmentServiceName: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          
+      - task: TerraformCLI@0
+        displayName: 'Terraform apply'
+        inputs:
+          command: 'apply'
+          environmentServiceName: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+
+  - stage: GitOps
+    displayName: Git operations and syncs
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: DEVPR
+        displayName: PR to DEV branch
+        pool:
+          name: Azure Pipelines
+          vmImage: 'windows-latest'
+        steps:
+          - checkout: self
+            persistCredentials: true
+          - script: |
+              cd $(System.DefaultWorkingDirectory)
+              git config --global user.email "bot@swaplanguage.com"
+              git config --global user.name "Azure Pipelines BOT"
+            displayName: Config GIT
+          - task: CreatePullRequest@1
+            inputs:
+              repoType: 'GitHub'
+              githubEndpoint: 'SwapLangauge'
+              githubRepository: '$(Build.Repository.Name)'
+              sourceBranch: 'master'
+              targetBranch: 'dev'
+              title: 'Master to Dev sync'
+            continueOnError: true
+      - job: MasterPR
+        displayName: PR to Master branch
+        pool:
+          name: Azure Pipelines
+          vmImage: 'windows-latest'
+        steps:
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Creates a variable ($day) that stores the current day of the week
+                $day = $(Get-Date -Format dddd);
+
+                # Creates a new pipeline variable (DayOfWeek) that stores the current day of the week ($day)
+                Write-Host "##vso[task.setvariable variable=DayOfWeek]$day"
+          - checkout: self
+            persistCredentials: true
+          - script: |
+              cd $(System.DefaultWorkingDirectory)
+              git config --global user.email "bot@swaplanguage.com"
+              git config --global user.name "Azure Pipelines BOT"
+            displayName: Config GIT
+          - task: CreatePullRequest@1
+            condition: eq(variables['DayOfWeek'], 'Friday')
+            inputs:
+              repoType: 'GitHub'
+              githubEndpoint: 'SwapLangauge'
+              githubRepository: '$(Build.Repository.Name)'
+              sourceBranch: 'dev'
+              targetBranch: 'master'
+              title: 'Dev to Master sync'
+            continueOnError: true
+
+  - stage: Test
+    displayName: Test project
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn: 
+    - Terraform
+    jobs:
+    - job: UnitTest
+      displayName: 'Test project'
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Test and check coverage'
+        inputs:
+          command: 'test'
+          projects: '**/<SOLUTION_NAME>.Tests.csproj'
+          arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/ /p:threshold=0 /p:thresholdType=branch /p:thresholdStat=total /p:Exclude="[*]?.Analyzers.*%2c[*]?.Feeders.*%2c[*]?.Polling.*%2c[*]?.DataAccessLayer.*%2c[*]?.Models.*%2c[*]?.API.Swagger.*"'
+          publishTestResults: true
+    - job: IntegrationTest
+      displayName: 'Integration test project'
+      steps:
+      - task: NuGetToolInstaller@1
+        inputs:
+          versionSpec: '>=6.x'
+          checkLatest: true
+      - task: Docker@2
+        displayName: 'Login to SWLMicroservice Container Repository'
+        inputs:
+          containerRegistry: 'swlmicroservicesacr registry'
+          command: 'login'
+      - task: CmdLine@2
+        displayName: 'Compose docker images'
+        inputs:
+          script: 'docker-compose up -d'
+          workingDirectory: '$(Build.SourcesDirectory)'
+      - task: PowerShell@2
+        displayName: 'Waiting for docker compose images to boot up properly'
+        inputs:
+          targetType: 'inline'
+          script: 'Start-Sleep -s 15'
+      - task: DotNetCoreCLI@2
+        displayName: 'Test and check coverage'
+        inputs:
+          command: 'test'
+          projects: '**/<SOLUTION_NAME>.Tests.Integration.csproj'
+          arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyIntegrationCoverage/ /p:threshold=0 /p:thresholdType=branch /p:thresholdStat=total /p:Exclude="[*]?.DataAccessLayer.Models.*%2c[*]?.Migrations.*%2c[*]?.Models.*"'
+          publishTestResults: true
+
+  - stage: UpdateTestDocker
+    displayName: Update test docker image
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn: Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    jobs:
+    - job: PushTestDocker
+      displayName: 'Publish TEST docker image'
+      steps:
+      - task: Docker@1
+        displayName: 'Build TEST image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          dockerFile: Dockerfile-TEST
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-test:$(Build.BuildNumber)'
+          useDefaultContext: false
+      - task: Docker@1
+        displayName: 'Push TEST image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          command: 'Push an image'
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-test:$(Build.BuildNumber)'
+
+  - stage: UpdateProdDocker
+    displayName: Update prod docker image
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn: Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+    - job: PushProdDocker
+      displayName: 'Publish PROD docker image'
+      steps:
+      - task: Docker@1
+        displayName: 'Build PROD image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          dockerFile: Dockerfile
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>:$(Build.BuildNumber)'
+          useDefaultContext: false
+      - task: Docker@1
+        displayName: 'Push PROD image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          command: 'Push an image'
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>:$(Build.BuildNumber)'
+
+  - stage: UpdateDockerDocker
+    displayName: Update DOCKER docker image
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn: Test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    jobs:
+    - job: PushDockerDocker
+      displayName: 'Publish DOCKER docker image'
+      steps:
+      - task: Docker@1
+        displayName: 'Build LATEST DOCKER image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          dockerFile: Dockerfile-DOCKER
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-docker:latest'
+          useDefaultContext: false
+      - task: Docker@1
+        displayName: 'Push LATEST DOCKER image'
+        inputs:
+          azureSubscriptionEndpoint: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+          azureContainerRegistry: swlmicroservicesacr.azurecr.io
+          command: 'Push an image'
+          imageName: 'swlmicroservicesacr.azurecr.io/<REPO_NAME>-docker:latest'
+
+
+  - stage: DeployTest
+    displayName: Deploy to test
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn:
+    - UpdateTestDocker
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    jobs:
+    - deployment: DeployTest
+      displayName: 'Deploy TEST'
+      environment:
+        name: Test
+        resourceType: kubernetes
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: self
+                persistCredentials: true
+              - task: HelmDeploy@0
+                displayName: 'Test deployment'
+                inputs:
+                  connectionType: 'Azure Resource Manager'
+                  azureSubscription: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+                  azureResourceGroup: 'Test-Kubernetes'
+                  kubernetesCluster: 'Test-Kubernetes'
+                  useClusterAdmin: true
+                  namespace: 'test'
+                  command: 'upgrade'
+                  chartType: 'Name'
+                  chartName: './helm/'
+                  releaseName: '<REPO_NAME>-release'
+                  overrideValues: 'container.tag=$(Build.BuildNumber)'
+                  valueFile: 'helm/values-test.yaml'    
+
+  - stage: DeployProd
+    displayName: Deploy to production
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-latest'
+    dependsOn:
+    - UpdateProdDocker
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+    - deployment: DeployProd
+      displayName: 'Deploy PROD'
+      environment:
+        name: Production
+        resourceType: kubernetes
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: self
+                persistCredentials: true
+              - task: HelmDeploy@0
+                displayName: 'Production deployment'
+                inputs:
+                  connectionType: 'Azure Resource Manager'
+                  azureSubscription: 'SwapLanguage - Microsoft Azure Sponsorship (Founders) service connection (Azure Resources)'
+                  azureResourceGroup: 'Production-Kubernetes'
+                  kubernetesCluster: 'Production-Kubernetes'
+                  useClusterAdmin: true
+                  namespace: 'production'
+                  command: 'upgrade'
+                  chartType: 'Name'
+                  chartName: './helm/'
+                  releaseName: '<REPO_NAME>-release'
+                  overrideValues: 'container.tag=$(Build.BuildNumber)'
+                  valueFile: 'helm/values.yaml'

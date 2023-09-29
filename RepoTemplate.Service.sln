@@ -1,0 +1,97 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Models", "RepoTemplate.Models\RepoTemplate.Models.csproj", "{27ED4A70-0FB0-4243-95C3-158CC893349A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.API", "RepoTemplate.API\RepoTemplate.API.csproj", "{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.API.Swagger", "RepoTemplate.API.Swagger\RepoTemplate.API.Swagger.csproj", "{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Extensions", "RepoTemplate.Extensions\RepoTemplate.Extensions.csproj", "{FD90C333-EF4D-44AA-8E37-08792734CCF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Mappers", "RepoTemplate.Mappers\RepoTemplate.Mappers.csproj", "{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Services", "RepoTemplate.Services\RepoTemplate.Services.csproj", "{5854D321-AEFC-4953-9F9B-3BF999FF8B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Tests", "RepoTemplate.Tests\RepoTemplate.Tests.csproj", "{AB916D51-420C-42AF-AC40-D6FDA851335B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoTemplate.Tests.Integration", "RepoTemplate.Tests.Integration\RepoTemplate.Tests.Integration.csproj", "{05C46A3D-C523-46DB-8975-642A76153798}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{6FBB346D-05F5-42DE-81E8-E771981B9C8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{7DC2872F-3DE7-4708-96D4-F2A419AA3133}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile-TEST = Dockerfile-TEST
+		Dockerfile-LOCAL = Dockerfile-LOCAL
+		Dockerfile-DOCKER = Dockerfile-DOCKER
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GIT", "GIT", "{99C1B62D-8020-4B99-AB7D-271D1637C2F7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.github\CODEOWNERS = .github\CODEOWNERS
+		.github\workflows\main.yml = .github\workflows\main.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helm", "Helm", "{2F2EA88A-2931-4E10-8756-2852154FD76D}"
+	ProjectSection(SolutionItems) = preProject
+		helm\Chart.yaml = helm\Chart.yaml
+		helm\values-test.yaml = helm\values-test.yaml
+		helm\templates\deployment.yaml = helm\templates\deployment.yaml
+		helm\templates\service.yaml = helm\templates\service.yaml
+		helm\values.yaml = helm\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{E6F0C648-EC53-4EBB-B751-75CD1AB78D03}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Terraform", "Terraform", "{4B328F63-0C29-41CF-8D38-FC74ED773299}"
+	ProjectSection(SolutionItems) = preProject
+		main.tf = main.tf
+		production.tf = production.tf
+		test.tf = test.tf
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27ED4A70-0FB0-4243-95C3-158CC893349A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27ED4A70-0FB0-4243-95C3-158CC893349A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27ED4A70-0FB0-4243-95C3-158CC893349A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27ED4A70-0FB0-4243-95C3-158CC893349A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA84C26-8E5F-47A6-A1C9-33B63CAD7F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5400AA84-0E64-4D72-87B4-D04B0EEB56DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD90C333-EF4D-44AA-8E37-08792734CCF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD90C333-EF4D-44AA-8E37-08792734CCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD90C333-EF4D-44AA-8E37-08792734CCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD90C333-EF4D-44AA-8E37-08792734CCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A10A2AC-34D0-4C61-A76A-1D4F5584E49B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5854D321-AEFC-4953-9F9B-3BF999FF8B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5854D321-AEFC-4953-9F9B-3BF999FF8B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5854D321-AEFC-4953-9F9B-3BF999FF8B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5854D321-AEFC-4953-9F9B-3BF999FF8B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB916D51-420C-42AF-AC40-D6FDA851335B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB916D51-420C-42AF-AC40-D6FDA851335B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB916D51-420C-42AF-AC40-D6FDA851335B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB916D51-420C-42AF-AC40-D6FDA851335B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C46A3D-C523-46DB-8975-642A76153798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C46A3D-C523-46DB-8975-642A76153798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C46A3D-C523-46DB-8975-642A76153798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C46A3D-C523-46DB-8975-642A76153798}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

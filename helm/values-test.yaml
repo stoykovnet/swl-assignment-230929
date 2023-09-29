@@ -1,0 +1,26 @@
+environment: test
+
+apphost: k8s
+
+deploymenttype: Recreate
+
+label:
+    name: <REPO_NAME>
+    
+app:
+    name: <REPO_NAME>
+    
+container:
+    name: <REPO_NAME>
+    pullPolicy: Always
+    image: swlmicroservicesacr.azurecr.io/<REPO_NAME>-test
+    tag: latest
+    port: 5000
+replicas: 1
+
+service:
+    port: <NEW_PORT>
+    type: ClusterIP
+
+ingress:
+    basepath: test.

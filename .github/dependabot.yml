@@ -1,0 +1,16 @@
+version: 2
+registries:
+  swaplanguage-nuget-feed:
+    type: nuget-feed
+    url: https://pkgs.dev.azure.com/swaplanguage/_packaging/SwapLanguage-Packages/nuget/v3/index.json
+    username: marcin.gadomski@swaplanguage.com
+    password: ${{ secrets.NUGET_FEED_TOKEN }}
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    registries:
+      - swaplanguage-nuget-feed
+    target-branch: "dev"
+    open-pull-requests-limit: 10

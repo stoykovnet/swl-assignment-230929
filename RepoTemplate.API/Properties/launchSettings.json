@@ -1,0 +1,46 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:7175",
+      "sslPort": 44351
+    }
+  },
+  "profiles": {
+    "RepoTemplate.API TEST": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
+      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "hotReloadEnabled": true,
+      "hotReloadProfile": "aspnetcore"
+    },
+    "RepoTemplate.API PROD": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
+      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "RepoTemplate.API LOCAL": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:<NEW_PORT>/swagger",
+      "applicationUrl": "http://localhost:<NEW_PORT>",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      },
+      "hotReloadEnabled": true,
+      "hotReloadProfile": "aspnetcore"
+    }
+  }
+}
