@@ -15,27 +15,115 @@
 #pragma warning disable 8603 // Disable "CS8603 Possible null reference return"
 #pragma warning disable 8604 // Disable "CS8604 Possible null reference argument for parameter"
 
-namespace PetStore.API.Swagger.Controllers.Generated
+/// TODO: Delete. I was trying out nswag how to generate Controller code with API specification from the yaml file.
+namespace PetStore.API.Controllers.Generated
 {
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
-
-    public abstract class PetControllerBase : Microsoft.AspNetCore.Mvc.Controller
+    public interface IController
     {
+
+        /// <summary>
+        /// Add a new pet to the store
+        /// </summary>
+
+        /// <param name="body">Pet object that needs to be added to the store</param>
+
+        System.Threading.Tasks.Task AddPetAsync(Pet body);
+
+        /// <summary>
+        /// Update an existing pet
+        /// </summary>
+
+        /// <param name="body">Pet object that needs to be added to the store</param>
+
+        System.Threading.Tasks.Task UpdatePetAsync(Pet body);
+
+        /// <summary>
+        /// Finds Pets by tags
+        /// </summary>
+
+        /// <remarks>
+        /// Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.
+        /// </remarks>
+
+        /// <param name="tags">Tags to filter by</param>
+
+        /// <returns>successful operation</returns>
+
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Pet>> FindPetsByTagsAsync(System.Collections.Generic.IEnumerable<string> tags);
+
+        /// <summary>
+        /// Find pet by ID
+        /// </summary>
+
+        /// <remarks>
+        /// Returns a single pet
+        /// </remarks>
+
+        /// <param name="petId">ID of pet to return</param>
+
+        /// <returns>successful operation</returns>
+
+        System.Threading.Tasks.Task<Pet> GetPetByIdAsync(long petId);
+
+        /// <summary>
+        /// Updates a pet in the store with form data
+        /// </summary>
+
+        /// <param name="petId">ID of pet that needs to be updated</param>
+
+        /// <param name="name">Updated name of the pet</param>
+
+        /// <param name="status">Updated status of the pet</param>
+
+        System.Threading.Tasks.Task UpdatePetWithFormAsync(long petId, string name, string status);
+
+        /// <summary>
+        /// Deletes a pet
+        /// </summary>
+
+
+        /// <param name="petId">Pet id to delete</param>
+
+        System.Threading.Tasks.Task DeletePetAsync(string api_key, long petId);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    [Microsoft.AspNetCore.Mvc.Route("v2")]
+
+    public partial class Controller : Microsoft.AspNetCore.Mvc.ControllerBase
+    {
+        private IController _implementation;
+
+        public Controller(IController implementation)
+        {
+            _implementation = implementation;
+        }
+
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("pet")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> AddPet([Microsoft.AspNetCore.Mvc.FromBody] [Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] Pet body);
+        public System.Threading.Tasks.Task AddPet([Microsoft.AspNetCore.Mvc.FromBody] Pet body)
+        {
+
+            return _implementation.AddPetAsync(body);
+        }
 
         /// <summary>
         /// Update an existing pet
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
         [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("pet")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> UpdatePet([Microsoft.AspNetCore.Mvc.FromBody] [Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] Pet body);
+        public System.Threading.Tasks.Task UpdatePet([Microsoft.AspNetCore.Mvc.FromBody] Pet body)
+        {
+
+            return _implementation.UpdatePetAsync(body);
+        }
 
         /// <summary>
         /// Finds Pets by tags
@@ -46,7 +134,11 @@ namespace PetStore.API.Swagger.Controllers.Generated
         /// <param name="tags">Tags to filter by</param>
         /// <returns>successful operation</returns>
         [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("pet/findByTags")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<System.Collections.Generic.ICollection<Pet>>> FindPetsByTags([Microsoft.AspNetCore.Mvc.FromQuery] [Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] System.Collections.Generic.IEnumerable<string> tags);
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Pet>> FindPetsByTags([Microsoft.AspNetCore.Mvc.FromQuery] System.Collections.Generic.IEnumerable<string> tags)
+        {
+
+            return _implementation.FindPetsByTagsAsync(tags);
+        }
 
         /// <summary>
         /// Find pet by ID
@@ -57,7 +149,11 @@ namespace PetStore.API.Swagger.Controllers.Generated
         /// <param name="petId">ID of pet to return</param>
         /// <returns>successful operation</returns>
         [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("pet/{petId}")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<Pet>> GetPetById([Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] long petId);
+        public System.Threading.Tasks.Task<Pet> GetPetById(long petId)
+        {
+
+            return _implementation.GetPetByIdAsync(petId);
+        }
 
         /// <summary>
         /// Updates a pet in the store with form data
@@ -66,14 +162,22 @@ namespace PetStore.API.Swagger.Controllers.Generated
         /// <param name="name">Updated name of the pet</param>
         /// <param name="status">Updated status of the pet</param>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("pet/{petId}")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> UpdatePetWithForm([Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] long petId, string name, string status);
+        public System.Threading.Tasks.Task UpdatePetWithForm(long petId, string name, string status)
+        {
+
+            return _implementation.UpdatePetWithFormAsync(petId, name, status);
+        }
 
         /// <summary>
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
         [Microsoft.AspNetCore.Mvc.HttpDelete, Microsoft.AspNetCore.Mvc.Route("pet/{petId}")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> DeletePet([Microsoft.AspNetCore.Mvc.FromHeader] string api_key, [Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] long petId);
+        public System.Threading.Tasks.Task DeletePet([Microsoft.AspNetCore.Mvc.FromHeader] string api_key, long petId)
+        {
+
+            return _implementation.DeletePetAsync(api_key, petId);
+        }
 
     }
 
@@ -86,19 +190,6 @@ namespace PetStore.API.Swagger.Controllers.Generated
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        public string ToJson()
-        {
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-        public static Category FromJson(string data)
-        {
-
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Category>(data, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -109,19 +200,6 @@ namespace PetStore.API.Swagger.Controllers.Generated
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Name { get; set; }
-
-        public string ToJson()
-        {
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-        public static Tag FromJson(string data)
-        {
-
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Tag>(data, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
 
     }
 
@@ -145,21 +223,27 @@ namespace PetStore.API.Swagger.Controllers.Generated
         [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.List<Tag> Tags { get; set; }
 
+        /// <summary>
+        /// pet status in the store
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Status { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public PetStatus? Status { get; set; }
 
-        public string ToJson()
-        {
+    }
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum PetStatus
+    {
 
-        }
-        public static Pet FromJson(string data)
-        {
+        [System.Runtime.Serialization.EnumMember(Value = @"available")]
+        Available = 0,
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Pet>(data, new Newtonsoft.Json.JsonSerializerSettings());
+        [System.Runtime.Serialization.EnumMember(Value = @"pending")]
+        Pending = 1,
 
-        }
+        [System.Runtime.Serialization.EnumMember(Value = @"sold")]
+        Sold = 2,
 
     }
 

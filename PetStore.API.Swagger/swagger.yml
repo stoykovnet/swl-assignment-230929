@@ -223,9 +223,5 @@ definitions:
         items:
           $ref: "#/definitions/Tag"
       status:
-        type: "string"
-        description: "pet status in the store"
-        enum:
-          - "available"
-          - "pending"
-          - "sold"
+        type: "string"        
+        example: "available|pending|sold"

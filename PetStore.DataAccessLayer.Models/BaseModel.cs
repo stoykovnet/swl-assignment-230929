@@ -5,7 +5,7 @@ namespace PetStore.DataAccessLayer.Models;
 
 public class BaseModel : IBaseModel
 {
-    [Key] public Guid Id { get; set; }
+    [Key] public long? Id { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }
     public string CreatedBy { get; set; } = null!;

@@ -15,7 +15,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
     public BaseRepository(PetStoreContext context)
     {
         Context = context;
-        DbSet = context.Set<TEntity>();
+        // TODO: Uncomment when it's time to add a SQL database.
+        // DbSet = context.Set<TEntity>();
     }
 
     public virtual void Delete(TEntity entityToDelete, string email)
@@ -28,7 +29,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         Context.Entry(entityToDelete).State = EntityState.Modified;
     }
 
-    public virtual void Delete(Guid id, string email)
+    public virtual void Delete(long? id, string email)
     {
         var entityToDelete = DbSet.FirstOrDefault(a => a.Id == id);
         if (entityToDelete == null)
@@ -76,7 +77,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         return CheckSoftDelete(query.ToArray());
     }
 
-    public virtual TEntity? GetById(Guid id)
+    public virtual TEntity? GetById(long? id)
     {
         var query = GetQueryWithAllIncludes();
 
@@ -86,12 +87,12 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         return CheckSoftDelete(query.FirstOrDefault());
     }
 
-    public virtual bool ExistsById(Guid id)
+    public virtual bool ExistsById(long? id)
     {
         return DbSet.Any(a => a.Id == id);
     }
 
-    public virtual void DeleteById(Guid id, string identifier)
+    public virtual void DeleteById(long? id, string identifier)
     {
         var entity = DbSet.FirstOrDefault(a => a.Id == id);
         if (entity == null)

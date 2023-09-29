@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PetStore.API.Swagger\PetStore.API.Swagger.csproj" />
+      <ProjectReference Include="..\PetStore.DataAccessLayer.Models\PetStore.DataAccessLayer.Models.csproj" />
     </ItemGroup>
 
 </Project>
