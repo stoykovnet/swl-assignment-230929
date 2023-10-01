@@ -15,6 +15,7 @@ namespace PetStore.API.Controllers
         private IMapper mapper;
         private string mockIdentifier = Guid.NewGuid().ToString();
         private string mockEmail = "a@a.a";
+
         public PetController(IPetRepository petRepository, IMapper mapper)
         {
             this.petRepository = petRepository;

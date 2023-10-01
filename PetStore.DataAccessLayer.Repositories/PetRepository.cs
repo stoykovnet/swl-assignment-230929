@@ -1,7 +1,5 @@
 ﻿using PetStore.DataAccessLayer.Models;
 using PetStore.DataAccessLayer.Repositories.Interfaces;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace PetStore.DataAccessLayer.Repositories
 {
@@ -40,18 +38,8 @@ namespace PetStore.DataAccessLayer.Repositories
             }
         };
 
-        private IList<TagModel> simpleMockTagList = new List<TagModel>()
-        {
-            new TagModel() { Id = 0, Name = "Super"},
-            new TagModel() { Id = 1, Name = "Cool" },
-            new TagModel() { Id = 2, Name = "Fast" },
-            new TagModel() { Id = 3, Name = "Brave" },
-            new TagModel() { Id = 4, Name = "Special" },
-            new TagModel() { Id = 5, Name = "Rare" },
-        };
-
         public PetRepository(PetStoreContext context) : base(context)
-    {
+        {
             this.context = context;
         }
 
