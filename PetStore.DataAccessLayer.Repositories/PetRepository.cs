@@ -51,8 +51,8 @@ namespace PetStore.DataAccessLayer.Repositories
 
         public override void Delete(long? id, string email)
         {
-            var pet = simpleMockPetList.Where(x => x.Id == id).First();
-            simpleMockPetList.RemoveAt(simpleMockPetList.IndexOf(pet));
+            var pet = simpleMockPetList.First(x => x.Id == id);
+            simpleMockPetList.Remove(pet);
         }
 
         public PetModel GetById(long petId)
@@ -68,7 +68,7 @@ namespace PetStore.DataAccessLayer.Repositories
 
         public void Update(PetModel pet, string identifier)
         {
-            var originalPet = simpleMockPetList.Where(x => x.Id == pet.Id).First();
+            var originalPet = simpleMockPetList.First(x => x.Id == pet.Id);
 
             int index = simpleMockPetList.IndexOf(originalPet);
             simpleMockPetList[index] = pet;
@@ -79,10 +79,13 @@ namespace PetStore.DataAccessLayer.Repositories
             var originalPet = simpleMockPetList.Where(x => x.Id == petId).First();
             int index = simpleMockPetList.IndexOf(originalPet);
 
-            originalPet.Name = name;
-            originalPet.Status = status;
+            if (index >= 0)
+            {
+                originalPet.Name = name;
+                originalPet.Status = status;
 
-            simpleMockPetList[index] = originalPet;
+                simpleMockPetList[index] = originalPet;
+            }
         }
 
         public override PetModel? CheckSoftDelete(PetModel? entity)
