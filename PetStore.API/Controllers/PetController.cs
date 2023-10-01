@@ -3,22 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PetStore.API.Swagger.Controllers.Generated;
 using PetStore.DataAccessLayer.Models;
-using PetStore.DataAccessLayer.Repositories.Interfaces;
 using System.Data;
 using PetStore.Extensions;
+using PetStore.Services.Interfaces;
 
 namespace PetStore.API.Controllers
 {
     public class PetController : PetControllerBase
     {
-        private IPetRepository petRepository;
+        private IPetService petService;
         private IMapper mapper;
-        private string mockIdentifier = Guid.NewGuid().ToString();
-        private string mockEmail = "a@a.a";
 
-        public PetController(IPetRepository petRepository, IMapper mapper)
+        public PetController(IPetService petService, IMapper mapper)
         {
-            this.petRepository = petRepository;
+            this.petService = petService;
             this.mapper = mapper;
         }
 
@@ -28,8 +26,7 @@ namespace PetStore.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    petRepository.Insert(mapper.Map<PetModel>(body), mockIdentifier);
-                    petRepository.Save();
+                    petService.AddPet(mapper.Map<PetModel>(body));
 
                     return Ok(); // TODO: Last inserted ID?
                 }
@@ -46,9 +43,7 @@ namespace PetStore.API.Controllers
         {
             try
             {
-                // TODO: Should we check if it exists first.
-                petRepository.Delete(petId, mockEmail);
-                petRepository.Save();
+                petService.DeletePet(petId);
 
                 return Ok(petId);
             }
@@ -62,7 +57,7 @@ namespace PetStore.API.Controllers
         {
             try
             {
-                var pets = petRepository.GetPetsByTags(tags).ToList();
+                var pets = petService.FindPetsByTags(tags).ToList();
                 return Ok(mapper.Map<ICollection<Pet>>(pets));
             }
             catch (DataException)
@@ -75,7 +70,7 @@ namespace PetStore.API.Controllers
         {
             try
             {
-                var pet = petRepository.GetById(petId);
+                var pet = petService.GetPetById(petId);
                 return Ok(mapper.Map<Pet>(pet));
             }
             catch (DataException)
@@ -90,7 +85,7 @@ namespace PetStore.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    petRepository.Update(mapper.Map<PetModel>(body), mockIdentifier);
+                    petService.UpdatePet(mapper.Map<PetModel>(body));
                     return Ok();
                 }
 
@@ -106,7 +101,7 @@ namespace PetStore.API.Controllers
         {
             try
             {
-                petRepository.UpdateWithForm(petId, name, status);
+                petService.UpdatePetWithForm(petId, name, status);
                 return Ok();
             }
             catch (DataException)

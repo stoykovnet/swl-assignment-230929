@@ -1,6 +1,7 @@
 ﻿using PetStore.DataAccessLayer.Models;
 using PetStore.DataAccessLayer.Repositories.Interfaces;
 using PetStore.Services.Interfaces;
+using System.Data;
 
 namespace PetStore.Services
 {
@@ -15,34 +16,78 @@ namespace PetStore.Services
             this.petRepository = petRepository;
         }
 
-        public void AddPet(PetModel entity)
+        public void AddPet(PetModel pet)
         {
-            throw new NotImplementedException();
+            try
+            {
+                petRepository.Insert(pet, mockIdentifier);
+                petRepository.Save();
+            }
+            catch (DataException)
+            {
+            }
         }
 
-        public void DeletePet(long? id)
+        public void DeletePet(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // TODO: Should we check if it exists first.
+                petRepository.Delete(id, mockEmail);
+                petRepository.Save();
+            }
+            catch (DataException)
+            {
+            }
         }
 
-        public void FindPetsByTags(long petId)
+        public IEnumerable<PetModel> FindPetsByTags(IEnumerable<string> tags)
         {
-            throw new NotImplementedException();
+            var pets = new List<PetModel>();
+
+            try
+            {
+                pets = petRepository.GetPetsByTags(tags).ToList();
+            }
+            catch (DataException)
+            {
+            }
+
+            return pets;
         }
 
-        public void GetPetById(IEnumerable<string> tags)
+        public PetModel GetPetById(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return petRepository.GetById(id);
+            }
+            catch (DataException)
+            {
+                return null;
+            }
         }
 
         public void UpdatePet(PetModel pet)
         {
-            throw new NotImplementedException();
+            try
+            {
+                petRepository.Update(pet, mockIdentifier);
+            }
+            catch (DataException)
+            {
+            }
         }
 
         public void UpdatePetWithForm(long petId, string name, string status)
         {
-            throw new NotImplementedException();
+            try
+            {
+                petRepository.UpdateWithForm(petId, name, status);
+            }
+            catch (DataException)
+            {
+            }
         }
     }
 }
