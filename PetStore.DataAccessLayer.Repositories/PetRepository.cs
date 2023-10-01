@@ -44,9 +44,9 @@ namespace PetStore.DataAccessLayer.Repositories
         }
 
         // TODO: Take care of the identifier logic.
-        public override void Insert(PetModel entity, string identifier)
+        public override void Insert(PetModel pet, string identifier)
         {
-            simpleMockPetList.Add(entity);
+            simpleMockPetList.Add(pet);
         }
 
         public override void Delete(long? id, string email)

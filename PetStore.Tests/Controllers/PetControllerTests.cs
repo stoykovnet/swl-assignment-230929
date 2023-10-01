@@ -63,11 +63,11 @@ namespace PetStore.Tests.Controllers
                 });
 
             // Act
-            var task = await petController.FindPetsByTags(tags);
+            var response = await petController.FindPetsByTags(tags);
 
             // Assert
-            Assert.IsType<OkObjectResult>(task.Result);
-            var okResult = (OkObjectResult)task.Result;
+            Assert.IsType<OkObjectResult>(response.Result);
+            var okResult = (OkObjectResult)response.Result;
             
             Assert.NotNull(okResult.Value);
 
