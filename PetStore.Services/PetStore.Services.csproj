@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces\" />
+      <ProjectReference Include="..\PetStore.DataAccessLayer.Repositories\PetStore.DataAccessLayer.Repositories.csproj" />
     </ItemGroup>
 
 </Project>
