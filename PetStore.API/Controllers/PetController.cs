@@ -22,92 +22,55 @@ namespace PetStore.API.Controllers
 
         public override async Task<IActionResult> AddPet([BindRequired, FromBody] Pet body)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    petService.AddPet(mapper.Map<PetModel>(body));
+                petService.AddPet(mapper.Map<PetModel>(body));
 
-                    return Ok(); // TODO: Last inserted ID?
-                }
+                return Ok();
+            }
 
-                return StatusCode(405);
-            }
-            catch (DataException)
-            {
-                return StatusCode(500);
-            }
+            return StatusCode(405);
         }
 
         public override async Task<IActionResult> DeletePet([FromHeader] string api_key, [BindRequired] long petId)
         {
-            try
-            {
-                petService.DeletePet(petId);
+            petService.DeletePet(petId);
 
-                return Ok(petId);
-            }
-            catch (DataException)
-            {
-                return StatusCode(500);
-            }
+            return Ok(petId);
         }
 
         public override async Task<ActionResult<ICollection<Pet>>> FindPetsByTags([BindRequired, FromQuery] IEnumerable<string> tags)
         {
-            try
-            {
-                var pets = petService.FindPetsByTags(tags).ToList();
-                return Ok(mapper.Map<ICollection<Pet>>(pets));
-            }
-            catch (DataException)
-            {
-                return StatusCode(404);
-            }
+            var pets = petService.FindPetsByTags(tags).ToList();
+
+            return Ok(mapper.Map<ICollection<Pet>>(pets));
         }
 
         public override async Task<ActionResult<Pet>> GetPetById([BindRequired] long petId)
         {
-            try
-            {
-                var pet = petService.GetPetById(petId);
+            var pet = petService.GetPetById(petId);
+
+            if (pet != null)
                 return Ok(mapper.Map<Pet>(pet));
-            }
-            catch (DataException)
-            {
-                return StatusCode(404);
-            }
+
+            return StatusCode(404);
         }
 
         public override async Task<IActionResult> UpdatePet([BindRequired, FromBody] Pet body)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    petService.UpdatePet(mapper.Map<PetModel>(body));
-                    return Ok();
-                }
+                petService.UpdatePet(mapper.Map<PetModel>(body));
+                return Ok();
+            }
 
-                return StatusCode(405);
-            }
-            catch (DataException)
-            {
-                return StatusCode(404);
-            }
+            return StatusCode(405);
         }
 
         public override async Task<IActionResult> UpdatePetWithForm([BindRequired] long petId, string name, string status)
         {
-            try
-            {
-                petService.UpdatePetWithForm(petId, name, status);
-                return Ok();
-            }
-            catch (DataException)
-            {
-                return StatusCode(404);
-            }
+            petService.UpdatePetWithForm(petId, name, status);
+            return Ok();
         }
     }
 }
