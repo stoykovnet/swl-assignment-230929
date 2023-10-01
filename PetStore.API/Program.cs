@@ -2,6 +2,8 @@ using PetStore.DataAccessLayer;
 using PetStore.DataAccessLayer.Repositories;
 using PetStore.DataAccessLayer.Repositories.Interfaces;
 using PetStore.Mappers;
+using PetStore.Services;
+using PetStore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddControllers();
 // Repositories.
 builder.Services.AddDbContext<PetStoreContext>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
+builder.Services.AddScoped<IPetService, PetService>();
 
 var app = builder.Build();
 
