@@ -62,7 +62,7 @@ namespace PetStore.DataAccessLayer.Repositories
 
         public IEnumerable<PetModel> GetPetsByTags(IEnumerable<string> tags)
         {
-            // TODO: Handle case.
+            // TODO: Handle case in Name.
             return simpleMockPetList.Where(pet => pet.Tags.Any(tag => tags.Contains(tag.Name))).ToList();
         }
 
