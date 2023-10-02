@@ -8,17 +8,21 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.19.0" />
-        <PackageReference Include="NSwag.AspNetCore" Version="13.14.0" />
-        <PackageReference Include="NSwag.MSBuild" Version="13.14.0">
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+        <PackageReference Include="NSwag.AspNetCore" Version="13.20.0" />
+        <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.20.0" />
+        <PackageReference Include="NSwag.MSBuild" Version="13.20.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
     
     <ItemGroup>
+      <ProjectReference Include="..\PetStore.API.Swagger\PetStore.API.Swagger.csproj" />
+      <ProjectReference Include="..\PetStore.Extensions\PetStore.Extensions.csproj" />
       <ProjectReference Include="..\PetStore.Mappers\PetStore.Mappers.csproj" />
+      <ProjectReference Include="..\PetStore.Services\PetStore.Services.csproj" />
     </ItemGroup>
 
 </Project>

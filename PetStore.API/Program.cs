@@ -1,10 +1,13 @@
+using PetStore.DataAccessLayer;
+using PetStore.DataAccessLayer.Repositories;
+using PetStore.DataAccessLayer.Repositories.Interfaces;
 using PetStore.Mappers;
+using PetStore.Services;
+using PetStore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //TODO: Add localhost database connection
-
-var app = builder.Build();
 
 builder.Services.AddAutoMapper(typeof(BaseProfile));
 builder.Services.AddSwaggerDocument();
@@ -14,6 +17,13 @@ builder.Services.AddApplicationInsightsTelemetry(opt =>
     opt.InstrumentationKey = builder.Configuration.GetSection("ApplicationInsights")["InstrumentationKey"];
 });
 builder.Services.AddControllers();
+
+// Repositories.
+builder.Services.AddDbContext<PetStoreContext>();
+builder.Services.AddScoped<IPetRepository, PetRepository>();
+builder.Services.AddScoped<IPetService, PetService>();
+
+var app = builder.Build();
 
 app.UseRouting();
 app.UseOpenApi();

@@ -16,7 +16,7 @@ public interface IRepository<TEntity> where TEntity : class
     /// </summary>
     /// <param name="id">ID of entity to delete</param>
     /// <param name="email">Identifier of user that deletes the entity</param>
-    void Delete(Guid id, string email);
+    void Delete(long? id, string email);
 
     /// <summary>
     ///     Deletes a list of entities
@@ -49,21 +49,21 @@ public interface IRepository<TEntity> where TEntity : class
     /// </summary>
     /// <param name="id">ID of Entity</param>
     /// <returns>Returns entity if found, null if not</returns>
-    TEntity? GetById(Guid id);
+    TEntity? GetById(long? id);
 
     /// <summary>
     ///     Checks if the entity exists by specified ID
     /// </summary>
     /// <param name="id">ID of the entity</param>
     /// <returns>Returns true if exists, false if not</returns>
-    bool ExistsById(Guid id);
+    bool ExistsById(long? id);
 
     /// <summary>
     ///     Soft-deletes the entity with specified ID
     /// </summary>
     /// <param name="id">ID of the entity</param>
     /// <param name="identifier">Identifier of the user that deletes the entity</param>
-    void DeleteById(Guid id, string identifier);
+    void DeleteById(long? id, string identifier);
 
     /// <summary>
     ///     Inserts an entity

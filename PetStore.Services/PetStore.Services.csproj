@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1"/>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces\" />
+      <ProjectReference Include="..\PetStore.DataAccessLayer.Repositories\PetStore.DataAccessLayer.Repositories.csproj" />
     </ItemGroup>
 
 </Project>
